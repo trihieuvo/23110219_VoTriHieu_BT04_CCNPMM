@@ -4,6 +4,10 @@ import LoginPage from "./pages/login/login";
 import RegisterPage from "./pages/register/register";
 import UserPage from "./pages/user";
 import Header from "./components/layout/header";
+import Footer from "./components/layout/Footer";
+import Home from "./pages/Home";
+import ProductDetail from "./pages/ProductDetail";
+import ProductSearch from "./pages/ProductSearch";
 import axios from "./util/axios-customize";
 import { AuthContext } from "./context/auth.context";
 
@@ -34,14 +38,19 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Header />
-      <div style={{ padding: "20px" }}>
-        <Routes>
-          <Route path="/" element={<div><h2>Trang chủ</h2><p>Xin chào đến với dự án MERN Stack!</p></div>} />
-          <Route path="/user" element={<UserPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-        </Routes>
+      <div className="flex flex-col min-h-screen">
+        <Header />
+        <main className="flex-grow bg-gray-50">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
+            <Route path="/search" element={<ProductSearch />} />
+            <Route path="/user" element={<UserPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+          </Routes>
+        </main>
+        <Footer />
       </div>
     </BrowserRouter>
   );

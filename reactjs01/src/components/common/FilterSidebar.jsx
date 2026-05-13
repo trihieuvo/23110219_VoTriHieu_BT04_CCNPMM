@@ -4,10 +4,12 @@ import axios from '../../util/axios-customize';
 const FilterSidebar = ({ searchParams, setSearchParams }) => {
     const [categories, setCategories] = useState([]);
     
-    // Extract current filters from URL
+    // State for controlled inputs and sliders
+    const [minPrice, setMinPrice] = useState(searchParams.get('minPrice') || '0');
+    const [maxPrice, setMaxPrice] = useState(searchParams.get('maxPrice') || '100000000');
+    
     const currentCategory = searchParams.get('category') || '';
-    const currentMinPrice = searchParams.get('minPrice') || '';
-    const currentMaxPrice = searchParams.get('maxPrice') || '';
+    const MAX_VAL = 100000000;
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -23,6 +25,12 @@ const FilterSidebar = ({ searchParams, setSearchParams }) => {
         fetchCategories();
     }, []);
 
+    // Update internal state when URL params change (e.g. on clear filters)
+    useEffect(() => {
+        setMinPrice(searchParams.get('minPrice') || '0');
+        setMaxPrice(searchParams.get('maxPrice') || '100000000');
+    }, [searchParams]);
+
     const handleFilterChange = (key, value) => {
         const newParams = new URLSearchParams(searchParams);
         if (value) {
@@ -30,21 +38,18 @@ const FilterSidebar = ({ searchParams, setSearchParams }) => {
         } else {
             newParams.delete(key);
         }
-        // Reset to page 1 on filter change
         newParams.set('page', '1');
         setSearchParams(newParams);
     };
 
-    const handlePriceChange = (e) => {
-        e.preventDefault();
-        const min = e.target.minPrice.value;
-        const max = e.target.maxPrice.value;
-        
+    const handleApplyPrice = (e) => {
+        if (e) e.preventDefault();
         const newParams = new URLSearchParams(searchParams);
-        if (min) newParams.set('minPrice', min);
+        
+        if (parseInt(minPrice) > 0) newParams.set('minPrice', minPrice);
         else newParams.delete('minPrice');
         
-        if (max) newParams.set('maxPrice', max);
+        if (parseInt(maxPrice) < MAX_VAL) newParams.set('maxPrice', maxPrice);
         else newParams.delete('maxPrice');
         
         newParams.set('page', '1');
@@ -57,11 +62,12 @@ const FilterSidebar = ({ searchParams, setSearchParams }) => {
             newParams.set('keyword', searchParams.get('keyword'));
         }
         setSearchParams(newParams);
-        // Clear inputs manually since they are uncontrolled
-        const minInput = document.querySelector('input[name="minPrice"]');
-        const maxInput = document.querySelector('input[name="maxPrice"]');
-        if (minInput) minInput.value = '';
-        if (maxInput) maxInput.value = '';
+        setMinPrice('0');
+        setMaxPrice('100000000');
+    };
+
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('vi-VN').format(value);
     };
 
     return (
@@ -108,27 +114,72 @@ const FilterSidebar = ({ searchParams, setSearchParams }) => {
             {/* Price Range */}
             <div>
                 <h3 className="font-semibold text-gray-800 mb-4">Khoảng giá (VNĐ)</h3>
-                <form onSubmit={handlePriceChange} className="space-y-4">
-                    <div className="flex items-center space-x-2">
+                
+                {/* Range Sliders */}
+                <div className="space-y-6 mb-6 px-2">
+                    <div className="relative h-2 bg-gray-200 rounded-full">
+                        <div 
+                            className="absolute h-full bg-indigo-500 rounded-full"
+                            style={{ 
+                                left: `${(parseInt(minPrice) / MAX_VAL) * 100}%`, 
+                                right: `${100 - (parseInt(maxPrice) / MAX_VAL) * 100}%` 
+                            }}
+                        ></div>
                         <input 
-                            type="number" 
-                            name="minPrice"
-                            defaultValue={currentMinPrice}
-                            placeholder="Từ"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                            type="range"
+                            min="0"
+                            max={MAX_VAL}
+                            step="100000"
+                            value={minPrice}
+                            onChange={(e) => setMinPrice(Math.min(parseInt(e.target.value), parseInt(maxPrice) - 100000).toString())}
+                            className="absolute w-full -top-1.5 h-5 bg-transparent appearance-none pointer-events-none cursor-pointer [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-gray-900 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:shadow-md"
                         />
-                        <span className="text-gray-500">-</span>
                         <input 
-                            type="number" 
-                            name="maxPrice"
-                            defaultValue={currentMaxPrice}
-                            placeholder="Đến"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                            type="range"
+                            min="0"
+                            max={MAX_VAL}
+                            step="100000"
+                            value={maxPrice}
+                            onChange={(e) => setMaxPrice(Math.max(parseInt(e.target.value), parseInt(minPrice) + 100000).toString())}
+                            className="absolute w-full -top-1.5 h-5 bg-transparent appearance-none pointer-events-none cursor-pointer [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-gray-900 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:shadow-md"
                         />
                     </div>
+                    <div className="flex justify-between text-xs text-gray-500">
+                        <span>0đ</span>
+                        <span>100tr</span>
+                    </div>
+                </div>
+
+                <form onSubmit={handleApplyPrice} className="space-y-4">
+                    <div className="flex items-center space-x-2">
+                        <div className="flex-1">
+                            <label className="text-[10px] text-gray-400 uppercase font-bold">Từ</label>
+                            <input 
+                                type="number" 
+                                value={minPrice}
+                                onChange={(e) => setMinPrice(e.target.value)}
+                                className="w-full px-2 py-1.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                            />
+                        </div>
+                        <span className="text-gray-500 mt-4">-</span>
+                        <div className="flex-1">
+                            <label className="text-[10px] text-gray-400 uppercase font-bold">Đến</label>
+                            <input 
+                                type="number" 
+                                value={maxPrice}
+                                onChange={(e) => setMaxPrice(e.target.value)}
+                                className="w-full px-2 py-1.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                            />
+                        </div>
+                    </div>
+                    
+                    <div className="text-[11px] text-gray-500 italic">
+                        {formatCurrency(minPrice)}đ - {formatCurrency(maxPrice)}đ
+                    </div>
+
                     <button 
                         type="submit"
-                        className="w-full bg-indigo-50 text-indigo-600 border border-indigo-200 py-2 rounded-md hover:bg-indigo-100 transition-colors font-medium text-sm"
+                        className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition-colors font-medium text-sm shadow-sm"
                     >
                         Áp dụng
                     </button>

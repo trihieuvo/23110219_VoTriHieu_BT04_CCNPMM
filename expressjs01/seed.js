@@ -55,9 +55,9 @@ const seedData = async () => {
                 isFeatured: true
             },
             {
-                name: 'Nintendo Switch Pro Controller',
-                slug: 'nintendo-switch-pro-controller',
-                description: 'Tay cầm hoàn hảo cho các trận chiến dài trên Switch.',
+                name: 'Nintendo Switch',
+                slug: 'nintendo-switch',
+                description: 'Switch.',
                 price: 1850000,
                 originalPrice: 2000000,
                 images: [

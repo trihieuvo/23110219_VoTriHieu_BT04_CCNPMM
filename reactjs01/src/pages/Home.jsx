@@ -35,8 +35,13 @@ const Home = () => {
     return (
         <div className="bg-gray-50 pb-12">
             {/* Hero Banner */}
-            <div className="bg-indigo-900 text-white py-20 relative overflow-hidden">
-                <div className="absolute inset-0 bg-black opacity-40"></div>
+            <div className="relative py-20 overflow-hidden bg-gray-900 text-white">
+                {/* Placeholder Image for Banner */}
+                <img 
+                    src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop" 
+                    alt="Hero Banner" 
+                    className="absolute inset-0 w-full h-full object-cover opacity-50"
+                />
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="max-w-2xl">
                         <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">

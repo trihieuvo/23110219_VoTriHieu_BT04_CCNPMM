@@ -61,8 +61,8 @@ const seedData = async () => {
                 price: 1850000,
                 originalPrice: 2000000,
                 images: [
-                    'https://images.unsplash.com/photo-1612282130134-49784d98ac61?q=80&w=800',
-                    'https://images.unsplash.com/photo-1579225663317-c0209bba1200?q=80&w=800'
+                    'https://images.unsplash.com/photo-1612036781124-847f8939b154?q=80&w=800',
+                    'https://images.unsplash.com/photo-1615680022647-99c397cbcaea?q=80&w=800'
                 ],
                 stock: 20,
                 sold: 45,
@@ -77,8 +77,8 @@ const seedData = async () => {
                 price: 5490000,
                 originalPrice: 5990000,
                 images: [
-                    'https://images.unsplash.com/photo-1621259182978-fbf93132e53d?q=80&w=800',
-                    'https://images.unsplash.com/photo-1592840496694-26d035b52b48?q=80&w=800'
+                    'https://images.unsplash.com/photo-1677721605698-d8540b35411b?q=80&w=800',
+                    'https://images.unsplash.com/photo-1659167911918-03fe74c396f8?q=80&w=800'
                 ],
                 stock: 10,
                 sold: 5,
@@ -93,8 +93,8 @@ const seedData = async () => {
                 price: 4590000,
                 originalPrice: 4990000,
                 images: [
-                    'https://images.unsplash.com/photo-1627485937980-221c88ce04ea?q=80&w=800',
-                    'https://images.unsplash.com/photo-1593118247619-e2d6f056869e?q=80&w=800'
+                    'https://images.unsplash.com/photo-1636908067903-abaedc57ab2b?q=80&w=800',
+                    'https://images.unsplash.com/photo-1632160912326-d2a71f4af742?q=80&w=800'
                 ],
                 stock: 15,
                 sold: 30,
@@ -102,22 +102,6 @@ const seedData = async () => {
                 isNewProduct: true,
                 isFeatured: true
             },
-            {
-                name: 'Razer Wolverine V2 Chroma',
-                slug: 'razer-wolverine-v2-chroma',
-                description: 'Tay cầm cao cấp với hệ thống LED RGB rực rỡ.',
-                price: 3500000,
-                originalPrice: 3800000,
-                images: [
-                    'https://images.unsplash.com/photo-1580234811432-5202083876eb?q=80&w=800',
-                    'https://images.unsplash.com/photo-1538481199005-271011d7e091?q=80&w=800'
-                ],
-                stock: 30,
-                sold: 80,
-                category: categories[3]._id,
-                isNewProduct: false,
-                isFeatured: false
-            }
         ];
 
         await Product.insertMany(products);

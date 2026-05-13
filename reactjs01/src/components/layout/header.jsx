@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { AuthContext } from '../../context/auth.context';
-import { ShoppingCart, User, Search, LogOut, Menu, X } from 'lucide-react';
+import { ShoppingCart, User, Search, LogOut, Menu, X, Gamepad2 } from 'lucide-react';
 
 const Header = () => {
     const { auth, setAuth } = useContext(AuthContext);
@@ -31,9 +31,12 @@ const Header = () => {
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
-                    <div className="flex-shrink-0">
-                        <Link to="/" className="text-2xl font-bold text-indigo-600">
-                            CtrlStore
+                    <div className="flex-shrink-0 mr-4">
+                        <Link to="/" className="flex items-center space-x-2">
+                            <div className="bg-indigo-600 p-1.5 rounded-lg">
+                                <Gamepad2 className="h-6 w-6 text-white" />
+                            </div>
+                            <span className="text-2xl font-bold text-indigo-600 tracking-tight">THStore</span>
                         </Link>
                     </div>
 
@@ -55,7 +58,7 @@ const Header = () => {
                     <div className="hidden md:flex items-center space-x-6">
                         <Link to="/" className="text-gray-600 hover:text-indigo-600 font-medium">Trang chủ</Link>
                         <Link to="/search" className="text-gray-600 hover:text-indigo-600 font-medium">Sản phẩm</Link>
-                        
+
                         <div className="flex items-center space-x-4 border-l pl-4">
                             <Link to="/cart" className="text-gray-600 hover:text-indigo-600 relative">
                                 <ShoppingCart className="h-6 w-6" />

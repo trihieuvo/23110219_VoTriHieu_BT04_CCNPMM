@@ -48,14 +48,28 @@ npm run dev
 
 ---
 
-## 3. Cấu hình môi trường (.env)
+## 3. Dữ liệu mẫu (Seed Data)
+
+Để tạo dữ liệu mẫu cho các danh mục (Categories) và sản phẩm (Products), hãy thực hiện lệnh sau:
+
+```bash
+cd expressjs01
+node seed.js
+```
+*Lưu ý: Lệnh này sẽ xóa các sản phẩm cũ và nạp lại danh sách tay cầm.*
+
+---
+
+## 4. Cấu hình môi trường (.env)
 
 Dự án đã bao gồm các file `.env` cơ bản. Nếu cần thay đổi:
 - **Backend**: Kiểm tra file `expressjs01/.env` (Cấu hình Port, MongoDB URL, JWT Secret).
 - **Frontend**: Kiểm tra file `reactjs01/.env` (Cấu hình `VITE_BACKEND_URL`).
 
-## 4. Các tính năng đã thực hiện
-- Đăng ký / Đăng nhập người dùng.
-- Xác thực bằng JWT (JSON Web Token).
-- Quản lý trạng thái đăng nhập với React Context.
-- Hiển thị danh sách người dùng (User Page) sử dụng Ant Design Table.
+## 5. Các tính năng đã thực hiện
+- **Xác thực**: Đăng ký, Đăng nhập, Quản lý Token JWT.
+- **Trang chủ**: Banner Hero, Sản phẩm mới, Khuyến mãi, Bán chạy nhất.
+- **Sản phẩm**: Xem chi tiết sản phẩm với Swiper Slider, hiển thị hàng tồn kho, sản phẩm tương tự.
+- **Tìm kiếm & Lọc**: Tìm kiếm theo tên, lọc theo danh mục và khoảng giá trực tiếp trên URL.
+- **Giao diện**: Hoàn toàn bằng Tailwind CSS, thiết kế responsive (mobile/desktop).
+- **Testing**: Bộ API Test bằng YAML trong thư mục `API_Test_Yaml_CCNPMM`.

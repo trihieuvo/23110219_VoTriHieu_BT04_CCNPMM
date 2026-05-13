@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Category = require('./src/models/Category');
 const Product = require('./src/models/Product');
 
-const dbURI = process.env.MONGO_URI || 'mongodb://localhost:27017/ccnpmm';
+const dbURI = process.env.MONGO_DB_URL || 'mongodb://localhost:27017/fullstack02';
 
 mongoose.connect(dbURI)
     .then(() => console.log('Connected to MongoDB for seeding...'))

@@ -77,15 +77,17 @@ const Header = () => {
                                         <span className="max-w-[80px] truncate">{auth.user.name}</span>
                                         <ChevronDown className="h-3.5 w-3.5 opacity-50" />
                                     </button>
-                                    <div className="absolute right-0 mt-1 w-52 bg-white rounded-xl shadow-xl py-2 z-10 hidden group-hover:block border border-gray-100 animate-fade-in">
-                                        <div className="px-4 py-2.5 border-b border-gray-50">
-                                            <p className="text-xs text-gray-400">Đăng nhập với</p>
-                                            <p className="text-sm text-gray-700 font-medium truncate">{auth.user.email}</p>
+                                    <div className="absolute right-0 top-full pt-2 w-52 z-10 hidden group-hover:block animate-fade-in">
+                                        <div className="bg-white rounded-xl shadow-xl py-2 border border-gray-100 overflow-hidden">
+                                            <div className="px-4 py-2.5 border-b border-gray-50">
+                                                <p className="text-xs text-gray-400">Đăng nhập với</p>
+                                                <p className="text-sm text-gray-700 font-medium truncate">{auth.user.email}</p>
+                                            </div>
+                                            <Link to="/profile" className="block px-4 py-2.5 text-sm text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 transition-colors">Tài khoản</Link>
+                                            <button onClick={handleLogout} className="block w-full text-left px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-colors flex items-center">
+                                                <LogOut className="h-4 w-4 mr-2" /> Đăng xuất
+                                            </button>
                                         </div>
-                                        <Link to="/profile" className="block px-4 py-2.5 text-sm text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 transition-colors">Tài khoản</Link>
-                                        <button onClick={handleLogout} className="block w-full text-left px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-colors flex items-center">
-                                            <LogOut className="h-4 w-4 mr-2" /> Đăng xuất
-                                        </button>
                                     </div>
                                 </div>
                             ) : (
